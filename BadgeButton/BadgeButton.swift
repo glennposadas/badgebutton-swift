@@ -120,9 +120,14 @@ extension BadgeButton {
   
   /// Remove the badge.
   func removeBadge() {
-    UIView.animate(withDuration: 0.3) {
-      self.badgeBGView.alpha = 0
-      self.badgeCountLabel.text = ""
+    DispatchQueue.main.async {
+      UIView.animate(withDuration: 0.3,
+                     delay: 0,
+                     options: .curveEaseOut) {
+        self.badgeBGView.alpha = 0
+      } completion: { complete in
+        self.badgeCountLabel.text = ""
+      }
     }
   }
 }
