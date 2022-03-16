@@ -87,7 +87,7 @@ class BadgeButton: UIButton {
     NSLayoutConstraint.activate([
       badgeBGView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
       badgeBGView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-      badgeBGView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
+      badgeBGView.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
     ])
   }
   

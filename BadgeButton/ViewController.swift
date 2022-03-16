@@ -2,33 +2,39 @@ import UIKit
 
 class ViewController: UIViewController {
   
-  //let b = BadgeButton(icon: UIImage(named: "bell")!)
-  let b = BadgeButton(icon: UIImage(named: "bell")!, shouldLimitValueTo9: true)
+  let bell1 = BadgeButton(icon: UIImage(named: "bell")!)
+  let bell2 = BadgeButton(icon: UIImage(named: "bell")!, shouldLimitValueTo9: true)
+  lazy var sv: UIStackView = {
+    let s = UIStackView(arrangedSubviews: [bell1, bell2])
+    s.axis = .horizontal
+    s.translatesAutoresizingMaskIntoConstraints = false
+    s.spacing = 50
+    return s
+  }()
   
   var badgeCount = 0
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
-    view.addSubview(b)
-    b.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(sv)
     NSLayoutConstraint.activate([
-      b.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-      b.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      b.widthAnchor.constraint(equalToConstant: 44),
-      b.heightAnchor.constraint(equalToConstant: 44)
+      sv.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+      sv.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      sv.heightAnchor.constraint(equalToConstant: 44)
     ])
   }
   
   
   @IBAction func increment(_ sender: Any) {
     badgeCount += 1
-    b.setBadgeValue(badgeCount)
+    bell1.setBadgeValue(badgeCount)
+    bell2.setBadgeValue(badgeCount)
   }
   
   @IBAction func hidgeBadge(_ sender: Any) {
     badgeCount = 0
-    b.removeBadge()
+    bell1.removeBadge()
+    bell2.removeBadge()
   }
 }
