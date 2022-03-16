@@ -14,6 +14,7 @@ import UIKit
  
  ```
  let b = BadgeButton(icon: UIImage(named: "bell")!)
+ let b = BadgeButton(icon: UIImage(named: "bell", shouldLimitValueTo9: true)!)
  ```
  
  */
@@ -26,6 +27,9 @@ class BadgeButton: UIButton {
   let defaultFontSize: CGFloat = 11
   let defaultBadgeSize = CGSize(width: 17, height: 17)
   
+  /// Set this to true through the constructor  if you want to limit the value to 9+ if value is >= 10.
+  private(set) var shouldLimitValueTo9: Bool = false
+  
   private lazy var badgeBGView: UIView = {
     let v = UIView()
     v.backgroundColor = defaultRedBadgeBG
@@ -36,8 +40,8 @@ class BadgeButton: UIButton {
     NSLayoutConstraint.activate([
       badgeCountLabel.topAnchor.constraint(equalTo: v.topAnchor),
       badgeCountLabel.bottomAnchor.constraint(equalTo: v.bottomAnchor),
-      badgeCountLabel.leadingAnchor.constraint(equalTo: v.leadingAnchor),
-      badgeCountLabel.trailingAnchor.constraint(equalTo: v.trailingAnchor)
+      badgeCountLabel.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 4),
+      badgeCountLabel.trailingAnchor.constraint(equalTo: v.trailingAnchor, constant: -4)
     ])
     return v
   }()
@@ -68,6 +72,11 @@ class BadgeButton: UIButton {
     layout()
   }
   
+  convenience init(icon: UIImage, shouldLimitValueTo9: Bool) {
+    self.init(icon: icon)
+    self.shouldLimitValueTo9 = shouldLimitValueTo9
+  }
+  
   private func layout() {
     setImage(
       icon,
@@ -76,7 +85,6 @@ class BadgeButton: UIButton {
     
     addSubview(badgeBGView)
     NSLayoutConstraint.activate([
-      badgeBGView.widthAnchor.constraint(greaterThanOrEqualToConstant: defaultBadgeSize.width),
       badgeBGView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
       badgeBGView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
       badgeBGView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
@@ -92,8 +100,6 @@ class BadgeButton: UIButton {
 
 extension BadgeButton {
   /// Takes a new value in integer form.
-  /// It's best for a single up to 2 characters.
-  /// For double digit values, you could probably use 9+.
   func setBadgeValue(_ value: Int) {
     DispatchQueue.main.async {
       if self.badgeBGView.alpha == 0 {
@@ -106,7 +112,7 @@ extension BadgeButton {
                         duration: 0.3,
                         options: .transitionFlipFromBottom,
                         animations: {
-        let text: String = value >= 10 ? "9+" : "\(value)"
+        let text: String = self.shouldLimitValueTo9 ? value >= 10 ? "9+" : "\(value)" : "\(value)"
         self.badgeCountLabel.text = text
       }, completion: nil)
     }

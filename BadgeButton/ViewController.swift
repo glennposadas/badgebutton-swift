@@ -2,7 +2,8 @@ import UIKit
 
 class ViewController: UIViewController {
   
-  let b = BadgeButton(icon: UIImage(named: "bell")!)
+  //let b = BadgeButton(icon: UIImage(named: "bell")!)
+  let b = BadgeButton(icon: UIImage(named: "bell")!, shouldLimitValueTo9: true)
   
   var badgeCount = 0
   
@@ -13,7 +14,7 @@ class ViewController: UIViewController {
     view.addSubview(b)
     b.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      b.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      b.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
       b.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       b.widthAnchor.constraint(equalToConstant: 44),
       b.heightAnchor.constraint(equalToConstant: 44)
@@ -27,6 +28,7 @@ class ViewController: UIViewController {
   }
   
   @IBAction func hidgeBadge(_ sender: Any) {
+    badgeCount = 0
     b.removeBadge()
   }
 }
