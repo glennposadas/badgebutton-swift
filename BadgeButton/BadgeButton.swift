@@ -130,7 +130,6 @@ extension BadgeButton {
                      delay: 0,
                      options: .curveEaseOut) {
         self.badgeBGView.alpha = 0
-      } completion: { complete in
         self.badgeCountLabel.text = ""
       }
     }
