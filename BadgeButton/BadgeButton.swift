@@ -108,6 +108,11 @@ extension BadgeButton {
         }
       }
       
+      guard value > 0 else {
+        self.removeBadge()
+        return
+      }
+     
       UIView.transition(with: self.badgeCountLabel,
                         duration: 0.3,
                         options: .transitionFlipFromBottom,
