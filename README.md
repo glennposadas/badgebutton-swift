@@ -8,8 +8,8 @@ Usage:
 let b = BadgeButton(icon: UIImage(named: "bell", shouldLimitValueTo9: true)!)
 
 // Objective-C:
- UIImage *img = [UIImage imageNamed:@"ic_chat"];
- self.chatButton = [[BadgeButton alloc] initWithIcon:img shouldLimitValueTo9:YES];
+UIImage *img = [UIImage imageNamed:@"ic_chat"];
+self.chatButton = [[BadgeButton alloc] initWithIcon:img shouldLimitValueTo9:YES];
 ```
 
 Demo:
