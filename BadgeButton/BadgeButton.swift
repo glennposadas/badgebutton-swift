@@ -30,6 +30,8 @@ class BadgeButton: UIButton {
   
   /// Set this to true through the constructor  if you want to limit the value to 9+ if value is >= 10.
   private(set) var shouldLimitValueTo9: Bool = false
+  /// Reference to prevent blinking animation
+  private(set) var currentBadgeCount: Int = 0
   
   private lazy var badgeBGView: UIView = {
     let v = UIView()
@@ -105,6 +107,12 @@ class BadgeButton: UIButton {
 extension BadgeButton {
   /// Takes a new value in integer form.
   func setBadgeValue(_ value: Int) {
+    guard currentBadgeCount != value else {
+      return
+    }
+    
+    currentBadgeCount = value
+    
     DispatchQueue.main.async {
       if self.badgeBGView.alpha == 0 {
         UIView.animate(withDuration: 0.3) {
