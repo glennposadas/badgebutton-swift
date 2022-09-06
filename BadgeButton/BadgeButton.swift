@@ -18,6 +18,7 @@ import UIKit
  ```
  
  */
+@objc
 class BadgeButton: UIButton {
   
   // MARK: - Properties
@@ -65,6 +66,7 @@ class BadgeButton: UIButton {
     super.init(frame: frame)
   }
   
+  @objc
   convenience init(icon: UIImage) {
     self.init(frame: .zero)
     
@@ -72,6 +74,7 @@ class BadgeButton: UIButton {
     layout()
   }
   
+  @objc
   convenience init(icon: UIImage, shouldLimitValueTo9: Bool) {
     self.init(icon: icon)
     self.shouldLimitValueTo9 = shouldLimitValueTo9
@@ -98,6 +101,7 @@ class BadgeButton: UIButton {
 
 // MARK: - Public
 
+@objc
 extension BadgeButton {
   /// Takes a new value in integer form.
   func setBadgeValue(_ value: Int) {
