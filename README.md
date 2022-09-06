@@ -8,8 +8,23 @@ Usage:
 let b = BadgeButton(icon: UIImage(named: "bell", shouldLimitValueTo9: true)!)
 
 // Objective-C:
-UIImage *img = [UIImage imageNamed:@"ic_chat"];
+// Using SF Symbols, and badgeButton as a barButtonItem.
+UIImageConfiguration *config = [UIImageSymbolConfiguration configurationWithFont:[UIFont systemFontOfSize:25]];
+UIImage *img = [UIImage systemImageNamed:@"message" withConfiguration:config];
 self.chatButton = [[BadgeButton alloc] initWithIcon:img shouldLimitValueTo9:YES];
+self.chatButton.contentMode = UIViewContentModeScaleAspectFit;
+[self.chatButton addTarget:self action:@selector(openChat) forControlEvents:UIControlEventTouchUpInside];
+
+UIBarButtonItem *leftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
+UIBarButtonItem *rightSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
+self.chatBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.chatButton];
+[self.chatBarButtonItem.customView setTranslatesAutoresizingMaskIntoConstraints:NO];
+[[self.chatBarButtonItem.customView.heightAnchor constraintEqualToConstant:30] setActive:YES];
+[[self.chatBarButtonItem.customView.widthAnchor constraintEqualToConstant:30] setActive:YES];
+self.navigationItem.rightBarButtonItems = @[leftSpace, self.chatBarButtonItem, rightSpace];
+
+// Initial badge count.
+[self.chatButton setBadgeValue:11];
 ```
 
 Demo:
