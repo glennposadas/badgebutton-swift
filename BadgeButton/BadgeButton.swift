@@ -27,7 +27,7 @@ class BadgeButton: UIButton {
   let defaultCornerRadius: CGFloat = 5
   let defaultFontSize: CGFloat = 11
   let defaultBadgeSize = CGSize(width: 17, height: 17)
-  let errorIconSize = CGSize(width: 20, height: 20)
+  let defaultErrorIconSize = CGSize(width: 20, height: 20)
   
   /// Set this to true through the constructor  if you want to limit the value to 9+ if value is >= 10.
   private(set) var shouldLimitValueTo9: Bool = false
@@ -62,6 +62,7 @@ class BadgeButton: UIButton {
   
   private lazy var errorImageView: UIImageView = {
     let i = UIImageView(image: .init(named: "ic_chat_warning"))
+    i.translatesAutoresizingMaskIntoConstraints = false
     i.contentMode = .scaleAspectFit
     i.alpha = 0
     return i
@@ -105,17 +106,18 @@ class BadgeButton: UIButton {
     )
     
     addSubview(badgeBGView)
+    addSubview(errorImageView)
+    
     NSLayoutConstraint.activate([
       badgeBGView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
       badgeBGView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-      badgeBGView.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+      badgeBGView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: 4)
     ])
     
-    addSubview(errorImageView)
     NSLayoutConstraint.activate([
-      badgeBGView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
-      badgeBGView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-      badgeBGView.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+      errorImageView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
+      errorImageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+      errorImageView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: 4)
     ])
   }
   
