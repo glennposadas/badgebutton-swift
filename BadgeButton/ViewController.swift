@@ -37,4 +37,9 @@ class ViewController: UIViewController {
     bell1.removeBadge()
     bell2.removeBadge()
   }
+  
+  @IBAction func showError(_ sender: Any) {
+    bell1.showError()
+    bell2.showError()
+  }
 }
