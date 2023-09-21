@@ -5,7 +5,8 @@ Usage:
 
 ```
 // Swift:
-let b = BadgeButton(icon: UIImage(named: "bell", shouldLimitValueTo9: true)!)
+let bell1 = BadgeButton(icon: UIImage(systemName: "bell.fill")!)
+let bell2 = BadgeButton(icon: UIImage(systemName: "bell.fill")!, shouldLimitValueTo9: true)
 
 // Objective-C:
 // Using SF Symbols, and badgeButton as a barButtonItem.
