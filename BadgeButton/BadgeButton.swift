@@ -65,6 +65,14 @@ class BadgeButton: UIButton {
     return l
   }()
   
+  private lazy var errorImageView: UIImageView = {
+    let i = UIImageView(image: .init(named: "ic_chat_warning"))
+    i.translatesAutoresizingMaskIntoConstraints = false
+    i.contentMode = .scaleAspectFit
+    i.alpha = 0
+    return i
+  }()
+  
   var icon: UIImage!
   
   // MARK: - Functions
@@ -75,11 +83,19 @@ class BadgeButton: UIButton {
   }
   
   @objc
-  convenience init(icon: UIImage) {
+  convenience init(icon: UIImage, errorIcon: UIImage?) {
     self.init(frame: .zero)
-    
+
     self.icon = icon
+    if let errorIcon = errorIcon {
+      self.errorImageView.image = errorIcon
+    }
     layout()
+  }
+  
+  @objc
+  convenience init(icon: UIImage) {
+    self.init(icon: icon, errorIcon: nil)
   }
   
   @objc
@@ -95,10 +111,18 @@ class BadgeButton: UIButton {
     )
     
     addSubview(badgeBGView)
+    addSubview(errorImageView)
+    
     NSLayoutConstraint.activate([
       badgeBGView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
       badgeBGView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-      badgeBGView.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+      badgeBGView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: 4)
+    ])
+    
+    NSLayoutConstraint.activate([
+      errorImageView.heightAnchor.constraint(equalToConstant: defaultBadgeSize.height),
+      errorImageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+      errorImageView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: 4)
     ])
   }
   
@@ -145,9 +169,35 @@ extension BadgeButton {
                         duration: 0.3,
                         options: .transitionFlipFromBottom,
                         animations: {
+        self.hideError()
         let text: String = self.shouldLimitValueTo9 ? value >= 10 ? "9+" : "\(value)" : "\(value)"
         self.badgeCountLabel.text = text
       }, completion: nil)
+    }
+  }
+  
+  /// Shows the error icon.
+  /// This hides the badge, not removing its value so that it can be displayed again..
+  func showError() {
+    DispatchQueue.main.async {
+      UIView.animate(withDuration: 0.3,
+                     delay: 0,
+                     options: .curveEaseOut) {
+        self.badgeBGView.alpha = 0
+        self.errorImageView.alpha = 1
+      }
+    }
+  }
+  
+  /// Resolves the error.
+  func hideError() {
+    DispatchQueue.main.async {
+      UIView.animate(withDuration: 0.3,
+                     delay: 0,
+                     options: .curveEaseOut) {
+        self.errorImageView.alpha = 0
+        self.badgeBGView.alpha = 1
+      }
     }
   }
   

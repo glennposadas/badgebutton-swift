@@ -2,8 +2,8 @@ import UIKit
 
 class ViewController: UIViewController {
   
-  let bell1 = BadgeButton(icon: UIImage(systemName: "bell.fill")!)
-  let bell2 = BadgeButton(icon: UIImage(systemName: "bell.fill")!, shouldLimitValueTo9: true)
+  let bell1 = BadgeButton(icon: UIImage(named: "bell")!)
+  let bell2 = BadgeButton(icon: UIImage(named: "bell")!, shouldLimitValueTo9: true)
 
   var badgeCount = 0
   
@@ -63,5 +63,10 @@ class ViewController: UIViewController {
     badgeCount = 0
     bell1.removeBadge()
     bell2.removeBadge()
+  }
+  
+  @IBAction func showError(_ sender: Any) {
+    bell1.showError()
+    bell2.showError()
   }
 }
