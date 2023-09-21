@@ -17,6 +17,10 @@ import UIKit
  let b = BadgeButton(icon: UIImage(named: "bell", shouldLimitValueTo9: true)!)
  ```
  
+ Warning:
+ If you're considering in stacking multiple instance of this control in a stackVIew, tapping the badge might not work.
+ Put them outside the stackView and this issue will not happen.
+ 
  */
 @objc
 class BadgeButton: UIButton {
@@ -32,13 +36,14 @@ class BadgeButton: UIButton {
   private(set) var shouldLimitValueTo9: Bool = false
   /// Reference to prevent blinking animation
   private(set) var currentBadgeCount: Int = 0
-  
+  /// Included in the touch area of this whole control.
   private lazy var badgeBGView: UIView = {
     let v = UIView()
     v.backgroundColor = defaultRedBadgeBG
     v.layer.cornerRadius = defaultCornerRadius
     v.translatesAutoresizingMaskIntoConstraints = false
     v.alpha = 0
+    v.isUserInteractionEnabled = false
     v.addSubview(badgeCountLabel)
     NSLayoutConstraint.activate([
       badgeCountLabel.topAnchor.constraint(equalTo: v.topAnchor),
@@ -56,6 +61,7 @@ class BadgeButton: UIButton {
     l.font = .systemFont(ofSize: defaultFontSize)
     l.layer.cornerRadius = defaultCornerRadius
     l.translatesAutoresizingMaskIntoConstraints = false
+    l.isUserInteractionEnabled = false
     return l
   }()
   
@@ -94,6 +100,16 @@ class BadgeButton: UIButton {
       badgeBGView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
       badgeBGView.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
     ])
+  }
+  
+  override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    let newArea = CGRect(
+      x: self.bounds.origin.x - 5.0,
+      y: self.bounds.origin.y - 5.0,
+      width: self.bounds.size.width + 30.0,
+      height: self.bounds.size.height + 10.0
+    )
+    return newArea.contains(point)
   }
   
   required init?(coder: NSCoder) {
