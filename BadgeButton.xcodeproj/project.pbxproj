@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		450386F92ABC5F1B00FB2527 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4525204427E1BC1600968067 /* BadgeButton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BadgeButton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4525204727E1BC1600968067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4525204927E1BC1600968067 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		4525203B27E1BC1600968067 = {
 			isa = PBXGroup;
 			children = (
+				450386F92ABC5F1B00FB2527 /* README.md */,
 				4525204627E1BC1600968067 /* BadgeButton */,
 				4525204527E1BC1600968067 /* Products */,
 			);
