@@ -31,7 +31,6 @@ class BadgeButton: UIButton {
   let defaultCornerRadius: CGFloat = 5
   let defaultFontSize: CGFloat = 11
   let defaultBadgeSize = CGSize(width: 17, height: 17)
-  let defaultErrorIconSize = CGSize(width: 20, height: 20)
   
   /// Set this to true through the constructor  if you want to limit the value to 9+ if value is >= 10.
   private(set) var shouldLimitValueTo9: Bool = false
